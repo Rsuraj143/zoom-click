@@ -14,6 +14,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://zoom-click.vercel.app"),
   title: "Zoom Clicks | Wedding & Pre-Wedding Photography in Berhampur, Odisha",
   description:
     "Zoom Clicks — cinematic wedding shoots, pre & post wedding photography, cinematography, video editing and album designing in Berhampur, Odisha. Capturing life's precious moments, one click at a time.",

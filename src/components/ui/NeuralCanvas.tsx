@@ -98,11 +98,13 @@ export function NeuralCanvas({ className = "" }: { className?: string }) {
 
     resize();
     draw();
+    const settle = requestAnimationFrame(resize);
     window.addEventListener("resize", resize);
     window.addEventListener("pointermove", onMove);
     window.addEventListener("pointerleave", onLeave);
     return () => {
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(settle);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerleave", onLeave);
