@@ -28,13 +28,14 @@ export const ADDRESS_LINES = [
 export const ADDRESS_FULL =
   "Digapahandi Road, Opp of Duduma Colony Bustand, Near 1st Gate, Berhampur (GM), Odisha";
 
-export const MAP_EMBED_SRC = `https://www.google.com/maps?q=${encodeURIComponent(
-  ADDRESS_FULL
-)}&output=embed`;
+export const MAP_COORDS = {
+  lat: 19.326220382756674,
+  lng: 84.76669876300724,
+};
 
-export const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-  ADDRESS_FULL
-)}`;
+export const MAP_EMBED_SRC = `https://www.google.com/maps?q=${MAP_COORDS.lat},${MAP_COORDS.lng}&output=embed`;
+
+export const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${MAP_COORDS.lat},${MAP_COORDS.lng}`;
 
 export const SOCIALS = {
   instagram: {

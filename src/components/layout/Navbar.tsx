@@ -10,12 +10,34 @@ import { NAV_LINKS, WHATSAPP_LINK } from "@/lib/constants";
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState(NAV_LINKS[0]?.href ?? "");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = NAV_LINKS.map((link) =>
+      document.querySelector(link.href)
+    ).filter((el): el is Element => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) {
+          setActiveHref(`#${visible.target.id}`);
+        }
+      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -45,9 +67,21 @@ export function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="relative transition-colors hover:text-zoom-gold"
+                className={clsx(
+                  "relative transition-colors hover:text-zoom-gold",
+                  activeHref === link.href
+                    ? "text-zoom-gold"
+                    : "text-foreground/80"
+                )}
               >
                 {link.label}
+                {activeHref === link.href && (
+                  <motion.span
+                    layoutId="nav-active-dot"
+                    className="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-zoom-gold"
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  />
+                )}
               </a>
             </li>
           ))}
@@ -89,7 +123,12 @@ export function Navbar() {
                   <a
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="block py-3 text-foreground/85 hover:text-zoom-gold transition-colors"
+                    className={clsx(
+                      "block py-3 transition-colors hover:text-zoom-gold",
+                      activeHref === link.href
+                        ? "text-zoom-gold"
+                        : "text-foreground/85"
+                    )}
                   >
                     {link.label}
                   </a>

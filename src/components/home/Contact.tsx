@@ -93,7 +93,7 @@ export function Contact() {
             <iframe
               title="Zoom Clicks location"
               src={MAP_EMBED_SRC}
-              className="absolute inset-0 h-full w-full grayscale invert-[0.92] contrast-[1.05]"
+              className="absolute inset-0 h-full w-full"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
